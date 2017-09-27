@@ -1,0 +1,70 @@
+Name:          katip-config
+Version:       0.0.0.0
+Synopsis:      A Katip scribe for systemd's journal
+Description:
+  Utilities to easily configure "Katip" based logging without hard-coding
+  settings.
+  .
+  Basic usage:
+  .
+  @
+  main :: IO ()
+  main = runEnv' $ $(logTM) InfoS "Application starting"
+  @
+  .
+  and run the resulting executable e.g. as
+  .
+  @
+  \$ LOGGING=stderr:?severity=warning ./katip-config-example
+  @
+
+Category:      Logging
+Stability:     alpha
+
+Author:        Nicolas Trangez
+Maintainer:    ikke@nicolast.be
+Copyright:     Copyright (C) 2017 Nicolas Trangez
+License:       Apache-2.0
+License-File:  LICENSE
+Homepage:      https://github.com/haskell-service/katip-config
+Bug-Reports:   https://github.com/haskell-service/katip-config/issues
+
+Cabal-Version: >= 1.8
+Build-Type:    Simple
+
+Extra-Source-Files:
+  README.md
+
+Source-Repository head
+  Type:     git
+  Location: https://github.com/haskell-service/katip-config.git
+
+Library
+  Build-Depends:   base >= 4.9 && < 4.11
+                 , bytestring >= 0.10 && < 0.11
+                 , http-types >= 0.9 && < 0.10
+                 , hsyslog >= 5.0 && < 5.1
+                 , katip >= 0.5 && < 0.6
+                 , katip-libsystemd-journal >= 0.0 && < 0.1
+                 , network-uri >= 2.6 && < 2.7
+                 , safe-exceptions >= 0.1 && < 0.2
+                 , text >= 1.2 && < 1.3
+  Exposed-Modules: Katip.Config
+  Hs-Source-Dirs:  src
+  Ghc-Options:     -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmissing-import-lists -Wredundant-constraints -g
+
+Executable katip-config-example
+  Build-Depends:   base >= 4.9 && < 4.11
+                 , katip >= 0.5 && < 0.6
+                 , katip-config
+  Hs-Source-Dirs:  examples
+  Main-Is:         Main.hs
+  Ghc-Options:     -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmissing-import-lists -Wredundant-constraints -g
+
+Test-suite katip-config-doctest
+  Type:            exitcode-stdio-1.0
+  Build-Depends:   base >= 4.9 && < 4.11
+                 , doctest >= 0.11 && < 0.12
+  Hs-Source-Dirs:  test
+  Main-Is:         doctest.hs
+  Ghc-Options:     -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmissing-import-lists -Wredundant-constraints -g
